@@ -50,18 +50,21 @@ treeMethods.childWithChar = function(chr){
 }
 
 treeMethods.findWords = function(charArray){
+  var curValue = this.value;
   var foundWords = [];
+  var uniqueCharArray;
+  var charIndex = charArray.indexOf(this.value);
   var smallerCharArray = charArray.slice();
-  debugger;
 
-  if(smallerCharArray.indexOf(this.value) !== -1){
-    smallerCharArray = smallerCharArray.splice(smallerCharArray.indexOf(this.value), 1);
+  if(charIndex !== -1){
+    smallerCharArray = smallerCharArray.slice(0, charIndex).concat(smallerCharArray.slice(charIndex+1));
   }
+  uniqueCharArray = _.uniq(smallerCharArray);
 
-  for(var i = 0; i < smallerCharArray.length; i++){
-    if(this.childWithChar(smallerCharArray[i]) !== undefined){
-      foundWords = foundWords.concat(_.map(this.childWithChar(smallerCharArray[i]).findWords(smallerCharArray), function(element){
-        element = this.value + element;
+  for(var i = 0; i < uniqueCharArray.length; i++){
+    if(this.childWithChar(uniqueCharArray[i]) !== undefined){
+      foundWords = foundWords.concat(_.map(this.childWithChar(uniqueCharArray[i]).findWords(smallerCharArray), function(element){
+        return curValue + element;
       }));
     }
   }
