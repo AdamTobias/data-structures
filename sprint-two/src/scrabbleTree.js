@@ -29,7 +29,6 @@ treeMethods.contains = function(target) {
 };
 
 treeMethods.addWords = function(word){
-  debugger;
   if(this.childWithChar(word[0]) === undefined){
     this.addChild(word[0]);
   } 
@@ -51,7 +50,27 @@ treeMethods.childWithChar = function(chr){
 }
 
 treeMethods.findWords = function(charArray){
+  var foundWords = [];
+  var smallerCharArray = charArray.slice();
+  debugger;
+
+  if(smallerCharArray.indexOf(this.value) !== -1){
+    smallerCharArray = smallerCharArray.splice(smallerCharArray.indexOf(this.value), 1);
+  }
+
+  for(var i = 0; i < smallerCharArray.length; i++){
+    if(this.childWithChar(smallerCharArray[i]) !== undefined){
+      foundWords = foundWords.concat(_.map(this.childWithChar(smallerCharArray[i]).findWords(smallerCharArray), function(element){
+        element = this.value + element;
+      }));
+    }
+  }
+
+  if(this.childWithChar('.') !== undefined){
+    foundWords.push(this.value);
+  }
   
+  return foundWords;
 }
 
 
