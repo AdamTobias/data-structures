@@ -8,7 +8,7 @@ var Set = function() {
 var setPrototype = {};
 
 setPrototype.add = function(item) {
-  this._storage[length] = item;
+  this._storage[this.length] = item;
   this.length++;
 };
 
@@ -22,10 +22,10 @@ setPrototype.contains = function(item) {
 };
 
 setPrototype.remove = function(item) {
-  for(var i in set._storage){
-    if(set._storage[i] === item){
-      delete set._storage[i];
-      set.length--;
+  for(var i in this._storage){
+    if(this._storage[i] === item){
+      delete this._storage[i];
+      this.length--;
     }
   }
 };
